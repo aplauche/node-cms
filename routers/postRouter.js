@@ -8,7 +8,7 @@ const postRouter = express.Router()
 
 
 
-postRouter.get('/', async (req,res) => {
+postRouter.get('/', async (req,res, next) => {
     try {
         const posts = await Posts.find({})
         if(posts.length > 0){
@@ -16,32 +16,32 @@ postRouter.get('/', async (req,res) => {
         } else {
             res.status(200).json({status: 'No Posts Found...'})
         }
-    } catch {
-        res.status(500).json({err: 'Server error'})
+    } catch(err) {
+        next(err)
     }
         
 })
 
-postRouter.post('/', async (req,res)=>{
+postRouter.post('/', async (req,res, next)=>{
     try {
         const newPost = await Posts.create(req.body)
         res.status(200).json(newPost)
 
-    } catch {
-        res.status(500).json({err: 'Post could not be created'})
+    } catch(err) {
+        next(err)
     }
 })
 
-postRouter.put('/', (req,res) => {
+postRouter.put('/', (req,res, next) => {
         res.status(403).end('PUT not supported on this endpoint')
 })
 
-postRouter.delete('/', async (req,res)=>{
+postRouter.delete('/', async (req,res, next)=>{
      try {
         const result = await Posts.remove({})
         res.status(200).json({status: result})
-    } catch {
-        res.status(500).json({err: 'DELETE operation failed'})
+    } catch(err) {
+        next(err)
     }
         
 })
