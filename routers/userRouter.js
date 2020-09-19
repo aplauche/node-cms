@@ -4,17 +4,17 @@ const express = require('express')
 const userRouter = express.Router()
 
 
-userRouter.route('/')
-    .get()
-    .post()
-    .put()
-    .delete()
+userRouter.get('/')
+userRouter.post('/')
+userRouter.put('/')
+userRouter.delete('/')
 
-userRouter.route('/:userId')
-    .get()
-    .post()
-    .put()
-    .delete()
+
+userRouter.get('/:userId')
+userRouter.post('/:userId')
+userRouter.put('/:userId')
+userRouter.delete('/:userId')
+
 
 
 module.exports = userRouter;

@@ -4,17 +4,17 @@ const express = require('express')
 const pageRouter = express.Router()
 
 
-pageRouter.route('/')
-    .get()
-    .post()
-    .put()
-    .delete()
+pageRouter.get('/')
+pageRouter.post('/')
+pageRouter.put('/')
+pageRouter.delete('/')
 
-pageRouter.route('/:pageId')
-    .get()
-    .post()
-    .put()
-    .delete()
+
+pageRouter.get('/:pageId')
+pageRouter.post('/:pageId')
+pageRouter.put('/:pageId')
+pageRouter.delete('/:pageId')
+
 
 
 module.exports = pageRouter;
