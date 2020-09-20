@@ -4,6 +4,9 @@ const mongoose = require('mongoose')
 
 require('dotenv').config()
 
+// import custom middlewares
+const auth = require('./middlewares/auth')
+
 // import Routers
 const userRouter = require('./routers/userRouter')
 const pageRouter = require('./routers/pageRouter')
@@ -37,8 +40,8 @@ app.get('/', (req,res)=>{
 
 // Routes
 app.use('/users', userRouter)
-app.use('/posts', postRouter)
-app.use('/pages', pageRouter)
+app.use('/posts', auth.isAuthenticated, postRouter)
+app.use('/pages', auth.isAuthenticated, pageRouter)
 
 
 // Error Handling 

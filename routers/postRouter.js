@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const express = require('express')
+const auth = require('../middlewares/auth')
 
 
 const Posts = require('../models/Post')
@@ -10,6 +11,7 @@ const postRouter = express.Router()
 
 postRouter.get('/', async (req,res, next) => {
     try {
+        console.log(req.user)
         const posts = await Posts.find({})
         if(posts.length > 0){
             res.status(200).json(posts)
