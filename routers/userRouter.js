@@ -24,6 +24,7 @@ userRouter.get('/', async (req,res,next) => {
 })
 
 userRouter.post('/register', async (req,res,next) => {
+    // TODO: ADD USER VALIDATION MIDDLEWARE TO CHECK EMAIL AND PASSWORD LENGTH ETC
     try {
         const newUser = await Users.create(req.body)
         res.status(200).json(newUser)
