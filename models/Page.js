@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
+const Schema = mongoose.Schema;
 const slugs = require("slugs");
 
 const pageSchema = new Schema(

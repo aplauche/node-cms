@@ -35,6 +35,9 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    firstName: String,
+    lastName: String,
+    featuredImage: String,
   },
   {
     timestamps: true,

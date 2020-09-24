@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const upload = require("../middlewares/upload");
 
 const Pages = require("../models/Page");
 

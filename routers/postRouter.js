@@ -10,7 +10,7 @@ const postRouter = express.Router();
 postRouter.get("/", async (req, res, next) => {
   try {
     console.log(req.user);
-    const posts = await Posts.find({});
+    const posts = await Posts.find({}).populate("author");
     if (posts.length > 0) {
       res.status(200).json(posts);
     } else {
@@ -23,6 +23,7 @@ postRouter.get("/", async (req, res, next) => {
 
 postRouter.post("/", upload.uploadFeaturedImage, async (req, res, next) => {
   try {
+    req.body.author = req.user._id;
     const newPost = await Posts.create(req.body);
     res.status(200).json(newPost);
   } catch (err) {
