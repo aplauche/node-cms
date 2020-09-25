@@ -29,8 +29,8 @@ connect.then(
 // Start up express app
 const app = new express();
 
-app.listen(4000, () => {
-  console.log("listening at port 4000");
+app.listen(process.env.PORT || 4000, () => {
+  console.log("listening at port " + process.env.PORT);
 });
 
 // Middlewares
