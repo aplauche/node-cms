@@ -26,7 +26,6 @@ userRouter.post(
   "/register",
   upload.uploadFeaturedImage,
   async (req, res, next) => {
-    // TODO: ADD USER VALIDATION MIDDLEWARE TO CHECK EMAIL AND PASSWORD LENGTH ETC
     try {
       const newUser = await Users.create(req.body);
       res.status(200).json(newUser);
@@ -60,8 +59,37 @@ userRouter.post("/login", async (req, res, next) => {
   }
 });
 
-userRouter.get("/:userId");
-userRouter.put("/:userId");
-userRouter.delete("/:userId");
+userRouter.get("/:userId", async (req, res, next) => {
+  try {
+    const user = await Users.find({ _id: req.params.userId });
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+userRouter.put(
+  "/:userId",
+  upload.uploadFeaturedImage,
+  async (req, res, next) => {
+    try {
+      const user = await Users.findOneAndUpdate(
+        { _id: req.params.userId },
+        req.body,
+        { new: true }
+      );
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+userRouter.delete("/:userId", async (req, res, next) => {
+  try {
+    const result = await Users.findByIdAndRemove(req.params.userId);
+    res.status(200).json({ status: result });
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = userRouter;

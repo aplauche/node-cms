@@ -24,7 +24,7 @@ postRouter.get("/", async (req, res, next) => {
 postRouter.post("/", upload.uploadFeaturedImage, async (req, res, next) => {
   try {
     req.body.author = req.user._id;
-    const newPost = await Posts.create(req.body);
+    const newPost = await Posts.create(req.body).populate("author");
     res.status(200).json(newPost);
   } catch (err) {
     next(err);
@@ -44,9 +44,52 @@ postRouter.delete("/", async (req, res, next) => {
   }
 });
 
-postRouter.get("/:postId");
-postRouter.post("/:postId");
-postRouter.put("/:postId");
-postRouter.delete("/:postId");
+// Specific post routes
+
+postRouter.get("/:postSlug", async (req, res, next) => {
+  try {
+    const post = await Posts.findOne({ slug: req.params.postSlug }).populate(
+      "author"
+    );
+    if (post !== null) {
+      res.status(200).json(post);
+    } else {
+      res.status(200).json({ status: "No Posts Found..." });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+postRouter.post("/:postSlug", async (req, res, next) => {
+  res.status(403).end("PUT not supported on this endpoint");
+});
+
+postRouter.put(
+  "/:postSlug",
+  upload.uploadFeaturedImage,
+  async (req, res, next) => {
+    try {
+      const post = await Posts.findOneAndUpdate(
+        { slug: req.params.postSlug },
+        req.body
+      );
+      const updatedPost = await Posts.findOne({
+        slug: req.params.postSlug,
+      }).populate("author");
+      res.status(200).json(updatedPost);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+postRouter.delete("/:postSlug", async (req, res, next) => {
+  try {
+    const result = await Posts.findOneAndDelete({ slug: req.params.postSlug });
+    res.status(200).json({ status: "deleted", result });
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = postRouter;

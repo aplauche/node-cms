@@ -30,7 +30,7 @@ pageSchema.pre("save", function (next) {
     return;
   }
   // If name was modified set up the slug
-  this.slug = slug(this.title);
+  this.slug = slugs(this.title);
   next();
 });
 
