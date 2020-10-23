@@ -83,6 +83,7 @@ userRouter.put(
     }
   }
 );
+
 userRouter.delete("/:userId", async (req, res, next) => {
   try {
     const result = await Users.findByIdAndRemove(req.params.userId);

@@ -35,6 +35,8 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    bio: String,
+    displayName: String,
     firstName: String,
     lastName: String,
     featuredImage: String,

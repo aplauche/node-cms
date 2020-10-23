@@ -15,6 +15,10 @@ const pageSchema = new Schema(
     featuredImage: {
       type: String,
     },
+    published: {
+      type: Boolean,
+      default: false,
+    },
     metaTitle: String,
     metaDesc: String,
     slug: String,
