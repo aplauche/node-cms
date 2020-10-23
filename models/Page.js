@@ -10,7 +10,7 @@ const pageSchema = new Schema(
       unique: true,
     },
     content: {
-      type: String,
+      type: Object,
     },
     featuredImage: {
       type: String,
