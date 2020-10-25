@@ -23,8 +23,8 @@ const postSchema = new Schema(
       ref: "User",
       required: true,
     },
-    metaTitle: String,
-    metaDesc: String,
+    seoTitle: String,
+    seoDesc: String,
     slug: String,
   },
   {

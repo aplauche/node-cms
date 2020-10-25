@@ -19,8 +19,8 @@ const pageSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    metaTitle: String,
-    metaDesc: String,
+    seoTitle: String,
+    seoDesc: String,
     slug: String,
   },
   {
