@@ -25,7 +25,13 @@ userRouter.get("/", async (req, res, next) => {
 userRouter.post("/register", async (req, res, next) => {
   try {
     const newUser = await Users.create(req.body);
-    res.status(200).json(newUser);
+    jwt.sign(newUser._id.toString(), process.env.JWTSECRET, (err, token) => {
+      if (err) return next(err);
+      res.status(200).json({
+        message: "Authenticated!",
+        token,
+      });
+    });
   } catch (err) {
     next(err);
   }
