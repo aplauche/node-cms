@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
-app.use("/pages", pageRouter);
+app.use("/pages", auth.isAuthenticated, pageRouter);
 
 // Error Handling
 
