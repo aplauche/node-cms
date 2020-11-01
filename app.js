@@ -38,13 +38,13 @@ app.listen(port, () => {
   console.log("listening at port " + port);
 });
 
+app.use(cors());
+
 cloudinary.config({
   cloud_name: provess.env.CLOUDNAME,
   api_key: process.env.CLOUDAPIKEY,
   api_secret: process.env.CLOUDAPISECRET,
 });
-
-app.use(cors());
 
 // Middlewares
 app.use(formData.parse());
