@@ -41,7 +41,7 @@ app.listen(port, () => {
 app.use(cors());
 
 cloudinary.config({
-  cloud_name: provess.env.CLOUDNAME,
+  cloud_name: process.env.CLOUDNAME,
   api_key: process.env.CLOUDAPIKEY,
   api_secret: process.env.CLOUDAPISECRET,
 });
