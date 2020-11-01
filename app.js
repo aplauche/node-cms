@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cloudinary = require("cloudinary");
+const formData = require("express-form-data");
 
 require("dotenv").config();
 
@@ -46,6 +47,7 @@ cloudinary.config({
 app.use(cors());
 
 // Middlewares
+app.use(formData.parse());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
