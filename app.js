@@ -43,11 +43,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDAPISECRET,
 });
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+app.use(cors());
 
 // Middlewares
 app.use(bodyParser.json());
