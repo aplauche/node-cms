@@ -56,7 +56,7 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-app.use("/users", auth.isAuthenticated, userRouter);
+app.use("/users", userRouter);
 app.use("/posts", auth.isAuthenticated, postRouter);
 app.use("/pages", auth.isAuthenticated, pageRouter);
 
