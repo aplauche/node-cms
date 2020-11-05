@@ -56,8 +56,8 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-app.use("/users", userRouter);
-app.use("/posts", postRouter);
+app.use("/users", auth.isAuthenticated, userRouter);
+app.use("/posts", auth.isAuthenticated, postRouter);
 app.use("/pages", auth.isAuthenticated, pageRouter);
 
 app.post("/image-upload", (req, res) => {
