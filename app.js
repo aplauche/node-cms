@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cloudinary = require("cloudinary");
+const formData = require("express-form-data");
 
 require("dotenv").config();
 
@@ -37,15 +38,16 @@ app.listen(port, () => {
   console.log("listening at port " + port);
 });
 
+app.use(cors());
+
 cloudinary.config({
-  cloud_name: provess.env.CLOUDNAME,
+  cloud_name: process.env.CLOUDNAME,
   api_key: process.env.CLOUDAPIKEY,
   api_secret: process.env.CLOUDAPISECRET,
 });
 
-app.use(cors());
-
 // Middlewares
+app.use(formData.parse());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -55,8 +57,8 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/users", userRouter);
-app.use("/posts", postRouter);
-app.use("/pages", pageRouter);
+app.use("/posts", auth.isAuthenticated, postRouter);
+app.use("/pages", auth.isAuthenticated, pageRouter);
 
 app.post("/image-upload", (req, res) => {
   const values = Object.values(req.files);
@@ -66,6 +68,22 @@ app.post("/image-upload", (req, res) => {
 
   Promise.all(promises).then((results) => {
     res.json(results);
+  });
+});
+
+app.post("/editorjs-image-upload", (req, res) => {
+  const values = Object.values(req.files);
+  const promises = values.map((image) =>
+    cloudinary.uploader.upload(image.path)
+  );
+
+  Promise.all(promises).then((results) => {
+    res.json({
+      success: 1,
+      file: {
+        url: results[0].url,
+      },
+    });
   });
 });
 

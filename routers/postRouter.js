@@ -21,7 +21,7 @@ postRouter.get("/", async (req, res, next) => {
   }
 });
 
-postRouter.post("/", upload.uploadFeaturedImage, async (req, res, next) => {
+postRouter.post("/", async (req, res, next) => {
   try {
     req.body.author = req.user._id;
     const newPost = await Posts.create(req.body).populate("author");
@@ -65,24 +65,20 @@ postRouter.post("/:postSlug", async (req, res, next) => {
   res.status(403).end("PUT not supported on this endpoint");
 });
 
-postRouter.put(
-  "/:postSlug",
-  upload.uploadFeaturedImage,
-  async (req, res, next) => {
-    try {
-      const post = await Posts.findOneAndUpdate(
-        { slug: req.params.postSlug },
-        req.body
-      );
-      const updatedPost = await Posts.findOne({
-        slug: req.params.postSlug,
-      }).populate("author");
-      res.status(200).json(updatedPost);
-    } catch (err) {
-      next(err);
-    }
+postRouter.put("/:postSlug", async (req, res, next) => {
+  try {
+    const post = await Posts.findOneAndUpdate(
+      { slug: req.params.postSlug },
+      req.body
+    );
+    const updatedPost = await Posts.findOne({
+      slug: req.params.postSlug,
+    }).populate("author");
+    res.status(200).json(updatedPost);
+  } catch (err) {
+    next(err);
   }
-);
+});
 postRouter.delete("/:postSlug", async (req, res, next) => {
   try {
     const result = await Posts.findOneAndDelete({ slug: req.params.postSlug });

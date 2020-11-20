@@ -18,9 +18,10 @@ pageRouter.get("/", async (req, res, next) => {
     next(err);
   }
 });
-pageRouter.post("/", upload.uploadFeaturedImage, async (req, res, next) => {
+pageRouter.post("/", async (req, res, next) => {
   try {
-    const newPage = await Pages.create(req.body);
+    req.body.author = req.user._id;
+    const newPost = await Pages.create(req.body).populate("author");
     res.status(200).json(newPage);
   } catch (err) {
     next(err);

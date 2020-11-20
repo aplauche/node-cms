@@ -19,6 +19,11 @@ const pageSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     seoTitle: String,
     seoDesc: String,
     slug: String,
