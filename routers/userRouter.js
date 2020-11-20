@@ -9,18 +9,18 @@ const userRouter = express.Router();
 
 const Users = require("../models/User");
 
-userRouter.get("/", async (req, res, next) => {
-  try {
-    const users = await Users.find({});
-    if (users.length > 0) {
-      res.status(200).json(users);
-    } else {
-      res.status(200).end("No Users Found...");
-    }
-  } catch (err) {
-    next(err);
-  }
-});
+// userRouter.get("/", async (req, res, next) => {
+//   try {
+//     const users = await Users.find({});
+//     if (users.length > 0) {
+//       res.status(200).json(users);
+//     } else {
+//       res.status(200).end("No Users Found...");
+//     }
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 userRouter.post("/register", async (req, res, next) => {
   try {
@@ -69,30 +69,26 @@ userRouter.get("/:userId", async (req, res, next) => {
     next(err);
   }
 });
-userRouter.put(
-  "/:userId",
-  upload.uploadFeaturedImage,
-  async (req, res, next) => {
-    try {
-      const user = await Users.findOneAndUpdate(
-        { _id: req.params.userId },
-        req.body,
-        { new: true }
-      );
-      res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
-);
-
-userRouter.delete("/:userId", async (req, res, next) => {
+userRouter.put("/:userId", async (req, res, next) => {
   try {
-    const result = await Users.findByIdAndRemove(req.params.userId);
-    res.status(200).json({ status: result });
+    const user = await Users.findOneAndUpdate(
+      { _id: req.params.userId },
+      req.body,
+      { new: true }
+    );
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }
 });
+
+// userRouter.delete("/:userId", async (req, res, next) => {
+//   try {
+//     const result = await Users.findByIdAndRemove(req.params.userId);
+//     res.status(200).json({ status: result });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 module.exports = userRouter;
