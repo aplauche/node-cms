@@ -63,7 +63,7 @@ userRouter.post("/login", async (req, res, next) => {
 
 userRouter.get("/:userId", auth.isAuthenticated, async (req, res, next) => {
   try {
-    const user = await Users.findOne({ _id: req.user._id });
+    const user = await Users.findOne({ email: req.user.email });
     res.status(200).json(user);
   } catch (err) {
     next(err);
