@@ -72,7 +72,7 @@ userRouter.get("/:userId", auth.isAuthenticated, async (req, res, next) => {
 userRouter.put("/:userId", auth.isAuthenticated, async (req, res, next) => {
   try {
     const user = await Users.findOneAndUpdate(
-      { _id: req.params.userId },
+      { email: req.user.email },
       req.body,
       { new: true }
     );
