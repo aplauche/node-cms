@@ -61,7 +61,7 @@ userRouter.post("/login", async (req, res, next) => {
   }
 });
 
-userRouter.get("/:userId", async (req, res, next) => {
+userRouter.get("/:userId", auth.isAuthenticated, async (req, res, next) => {
   try {
     const user = await Users.findOne({ _id: req.params.userId });
     res.status(200).json(user);
@@ -69,7 +69,7 @@ userRouter.get("/:userId", async (req, res, next) => {
     next(err);
   }
 });
-userRouter.put("/:userId", async (req, res, next) => {
+userRouter.put("/:userId", auth.isAuthenticated, async (req, res, next) => {
   try {
     const user = await Users.findOneAndUpdate(
       { _id: req.params.userId },
